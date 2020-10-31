@@ -69,7 +69,8 @@
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
     }*/
-     function signOut(gapi) {
+     function signOut() {
+           var gapi;
            var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
