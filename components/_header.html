@@ -76,7 +76,9 @@
             auth2.signOut().then(function () {
                 console.log('User signed out.');
                 localStorage.removeItem("LOGGED_IN_USER");
+                checkLoggedIn();
                window.location.href = "login.html";
+                
             });
       }
     
