@@ -69,31 +69,9 @@
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
             let user = { id: profile.getId(), name: profile.getName(), photoUrl: profile.getImageUrl(), email: profile.getEmail() };
             localStorage.setItem("LOGGED_IN_USER", JSON.stringify(user));
-           // window.location.href = "ticket.html";
+            window.location.href = "ticket.html";
             console.log(user);
-            checkLoggedIn();
         }
-       
-        function checkLoggedIn() {
-            var user = localStorage.getItem("LOGGED_IN_USER");
-            var loggedInUser = user != null ? JSON.parse(user) : null;
-            if (loggedInUser == null) {
-                //If user not loggedin, Show login button and hide logout button
-                document.querySelector("#signin").style.display = "block";
-               
-               // document.querySelector("#userdetail").innerHTML = "";
-            }
-            else {
-                //If user loggedIn, Hide login button and show logout button
-                document.querySelector("#signin").style.display = "none";
-               // document.querySelector("#signout").style.display = "block";
-                //Show user details
-                //let content = `Welcome ${loggedInUser.name}( ${loggedInUser.id})`;
-                //content += `<img src="${loggedInUser.photoUrl}" width="30" />`;
-               // document.querySelector("#userdetail").innerHTML = content;
-            }
-        }
-        checkLoggedIn();
     </script>
     <hr><br><br>
     <section id="media" style="margin-top: 20px;">
