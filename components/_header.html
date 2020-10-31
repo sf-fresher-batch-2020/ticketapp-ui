@@ -69,6 +69,11 @@
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
     }*/
+    $(".nav-link").click(function(){
+        var _id=$(this).attr("signout");
+         localStorage.removeItem("LOGGED_IN_USER");
+        window.location.href = "login.html";
+    });
       function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
