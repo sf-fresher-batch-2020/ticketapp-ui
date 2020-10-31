@@ -51,7 +51,7 @@
         console.log("User is logged in");
         // Hide menus which has data-loggedin=false
         // Show menus which has data-loggedin=true
-        document.querySelectorAll(".nav-link[data-loggedin=false] , .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "none" );
+        document.querySelectorAll(".nav-link[data-loggedin=false] ,.logOut[data-loggedin=true], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "none" );
         document.querySelectorAll(".nav-link[data-loggedin=true] , .logOut[data-loggedin=true], .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "block" );
     }
     else{
@@ -59,8 +59,8 @@
         console.log("User is not logged in");
         // Hide menus which has data-loggedin=true
         // Show menus which has data-loggedin=false
-        document.querySelectorAll(".nav-link[data-loggedin=true] , .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "none" );
-        document.querySelectorAll(".nav-link[data-loggedin=false] , .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "block" );
+        document.querySelectorAll(".nav-link[data-loggedin=true] , .logOut[data-loggedin=true], .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "none" );
+        document.querySelectorAll(".nav-link[data-loggedin=false], .logOut[data-loggedin=true], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "block" );
     
     }
     
@@ -69,11 +69,7 @@
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
     }*/
-    $(".logout").click(function(){
-        var _id=$(this).attr("signout");
-         localStorage.removeItem("LOGGED_IN_USER");
-        window.location.href = "login.html";
-    });
+    
       function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
@@ -83,4 +79,9 @@
             });
       }
     
+    $(".logout").click(function(){
+        var _id=$(this).attr("signout");
+         localStorage.removeItem("LOGGED_IN_USER");
+        window.location.href = "login.html";
+    });
     </script>
