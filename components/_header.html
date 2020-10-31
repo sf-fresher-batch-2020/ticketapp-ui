@@ -38,7 +38,7 @@
                 <a class="nav-link" href="" data-loggedin="true" style="display: block;">Welcome </a>
             </li>
             <li class="nav-item ">
-               <a class="nav-link logOut" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
+               <a class="nav-link" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
             </li>
         </ul>
        
@@ -51,16 +51,16 @@
         console.log("User is logged in");
         // Hide menus which has data-loggedin=false
         // Show menus which has data-loggedin=true
-        document.querySelectorAll(".nav-link[data-loggedin=false] ,.logOut[data-loggedin=true], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "none" );
-        document.querySelectorAll(".nav-link[data-loggedin=true] , .logOut[data-loggedin=true], .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "block" );
+        document.querySelectorAll(".nav-link[data-loggedin=false] , .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "none" );
+        document.querySelectorAll(".nav-link[data-loggedin=true] ,  .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "block" );
     }
     else{
         
         console.log("User is not logged in");
         // Hide menus which has data-loggedin=true
         // Show menus which has data-loggedin=false
-        document.querySelectorAll(".nav-link[data-loggedin=true] , .logOut[data-loggedin=true], .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "none" );
-        document.querySelectorAll(".nav-link[data-loggedin=false], .logOut[data-loggedin=true], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "block" );
+        document.querySelectorAll(".nav-link[data-loggedin=true] , .nav-item[data-loggedin=true] , .dropdown-item[data-loggedin=true]").forEach(obj => obj.style.display= "none" );
+        document.querySelectorAll(".nav-link[data-loggedin=false], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "block" );
     
     }
     
@@ -79,9 +79,5 @@
             });
       }
     
-    $(".logout").click(function(){
-        var _id=$(this).attr("signout");
-         localStorage.removeItem("LOGGED_IN_USER");
-        window.location.href = "login.html";
-    });
+   
     </script>
