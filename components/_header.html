@@ -38,7 +38,7 @@
                 <a class="nav-link" href="" data-loggedin="true" style="display: block;">Welcome </a>
             </li>
             <li class="nav-item ">
-               <a class="nav-link" id="signout" href="#" onclick="logout()" onclick="signOut()" data-loggedin="true">(Logout) </a>
+               <a class="nav-link" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
             </li>
         </ul>
        
@@ -64,12 +64,12 @@
     
     }
     
-    function logout(){
+   /* function logout(){
        // localStorage.clear();
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
-    }
-     function signOut() {
+    }*/
+     function signOut(gapi) {
            var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
