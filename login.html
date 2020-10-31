@@ -4,107 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - HelpDesk </title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <title>Login - HelpDesk </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        crossorigin="anonymous">
     <!-- jQuery and JS bundle w/ Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>       
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/login.css">
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i"
         rel="stylesheet">
-    
+    <script src="modules/index.js"></script>
+    <script src="modules/loginservices.js"></script>
 </head>
 
 <body>
     <header id="header">
         <!-- Load Header content-->
-      </header>
-    <section id="hero" class="fade-in">
-        <div class="hero-container">
-            <h1>Welcome to HelpDesk</h1>
-            <h2>Let's consult &amp; start your business.</h2>
-            <img src="assets/img/hero-img.png" alt="Hero Imgs">
-            <h4>It's free and always will be !!!</h4>
-            <a href="#" class=" nav-link btns">Get Started</a>
-
-        </div>
-        <hr>
-    </section>
-
-    <main id="main">
-        <section class="padd-section text-center">
-            <div class="container">
-                <div class="section-title text-center">
-                    <h2>WHAT WE DO</h2>
-                    <p class="separator"></p>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-6 col-lg-4" style="margin-top: 30px;">
-                        <div class="card-img-top">
-                            <i class=" fa fa-black-tie fa-4x" aria-hidden="true"></i>
-                            <h4 class="card-title">Business Plan & Project Report</h4>
-                            <p class="card-text">We help you to prepare a business plan and project report to raise
-                                equity/debt funds & loan from banks, financial institution, VCs, etc.</p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4" style="margin-top: 30px;">
-                        <div class="card-img-top">
-                            <i class="fa fa-pencil fa-4x" aria-hidden="true"></i>
-                            <h4 class="card-title">Company Formation</h4>
-                            <p class="card-text">Start working on your business idea, we will incorporate your company.
-                                Clear your all registration doubts with our professionals.</p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4" style="margin-top: 30px;">
-                        <div class="card-img-top">
-                            <i class="fa fa-copyright fa-4x" aria-hidden="true"></i>
-                            <h4 class="card-title">Copyright Registration</h4>
-                            <p class="card-text">Copyright registration is required to protect your original artistic,
-                                literary work, music, video, jingles, website, mobile app and software from infringement
-                                and being copied.</p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <section id="about-us" class="about-us padd-section" style="margin-top: 70px;">
-        <div class="container">
+    </header>
+    <main class="container">
+        <div id="page-content">
             <div class="row justify-content-center">
-
-                <div class="col-md-4 col-lg-5">
-                    <img src="assets/img/mobile.webp" alt="About">
-                </div>
-
-                <div class="col-md-8 col-lg-4">
+                <form onsubmit="login()" autocomplete="off">
                     <div class="about-content">
-                        <h2>GET<span>eStartup</span>INDIA IN YOUR POCKET! </h2>
-                        <p>Download our free Android App and get realtime update on your order status.
-                            Easily connect with our professionals handling your order over chat & mobile.
-                            Never miss business compliances due date with advance notifications.</p>
-                        <div class="btns-fa p-4">
-                            <a href="# "><i class="fa fa-apple fa-1x "></i> App Store</a>
-                            <a href="#"><i class="fa fa-play fa-1x"></i> Google Play</a>
-                            <a href="#"><i class="fa fa-windows fa-1x"></i> windows</a>
+                        <h2><span>Login</span></h2>
+                    </div>
+                    <label>Email</label>
+                    <input type="email" name="mail" id="mail" required autofocus></br>
+                    <labe>Password</labe>
+                    <input type="password" name="pass" id="pass" required> </br>
+                    <select name="" id="logintype">
+                        <option value="">Select One</option>
+                        <option value="u" id="u">User</option>
+                        <option value="Admin" id="Admin">Technical Department</option>
+                    </select>
+                    <div class="row justify-content-center">
+                        <input class="btns" type="submit" value="login">
+                    </div>
+                    <br />
+                    <div class="row justify-content-center">
+                        <div id="message">
+
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-        <hr>
-    </section>
+    </main>
+    <hr><br><br>
     <section id="media" style="margin-top: 20px;">
         <div class="container">
             <div class="row justify-content-center">
@@ -207,31 +157,39 @@
     </footer>
     <script>
         $("#header").load("components/_header.html");
-      </script>
+    </script>
     <script>
-      
-        function login(){
+
+        function login() {
             event.preventDefault();
             // Step 1: Get Form Values
             let email = document.querySelector("#mail").value;
             let password = document.querySelector("#pass").value;
+            let logintype = document.getElementById("logintype").value;
+            var u= document.getElementById('u').value;
+            var Admin= document.getElementById('Admin').value;
             //Step 2: Store all form values in a single object, so that it will easy to send 
-            let obj = { "email" : email , "password": password };
+            let obj = { "email": email, "password": password, "logintype": logintype };
             console.log(obj);
-            var loginserviceobj= new LoginService();
-             loginserviceobj.login(email,password);
-            var user = loginserviceobj.login(email,password);
-            if(user)
-            {
-                window.location.href="create_account.html";
+            var loginserviceobj = new LoginService();
+            loginserviceobj.login(email, password, logintype);
+            var user = loginserviceobj.login(email, password, logintype);
+            if (user) {
+                window.location.href = "ticket.html";
             }
-            else
-            {
-                document.querySelector("#message").innerHTML = "invalid";
+            else {
+                document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>Invalid Email or Password</div>";
             }
-        }
+            
+
+            }
+
+        
+
+
+
     </script>
- 
+
 </body>
 
 </html>
