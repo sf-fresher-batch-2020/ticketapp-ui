@@ -185,14 +185,14 @@
 
         function displaytickets() {
             var tickets = new addTicket().list();
-            this.loggedInUser = {Id:1};
+            this.loggedInUser = { Id: 1 };
             var data = JSON.parse(localStorage.getItem("TICKET")) || [];
             data.filter(obj => obj.createdBy == loggedInUser.Id);
             console.log(tickets);
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-                   
+
                     let closeBtn = `<button id='close' onclick="close1('${obj.ticketstatus}')">Close Ticket</button>`;
                     var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>" + obj.department + "</td><td>" + obj.priority + "</td><td>" + obj.tel + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td><button onclick='viewdetails(" + obj.tel + ")'>View details</button></td><td><button onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
@@ -226,28 +226,18 @@
                 + '<br>' + 'Date: &nbsp;' + obj.date;
             document.getElementById('viewDetails').innerHTML = newticket;
         }
-        function close1(tick) {
-            let ticketstatus;
-            console.log('close');
-            alert(ticketstatus);
+       
+       function close1(ticketId) {
             var tickets = new addTicket().list();
-            tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
-           // console.log("Going to approve", tickets);
-            var obj = {"ticketstatus":"Close"}
-          var result = Object.keys(obj).map((key) => [obj[key]]);
-          console.log(result);
-          return result;
-         // let index = tickets.findIndex(obj => obj.ticketstatus == tick);
-          //tickets.push(ticketstatus);
-          
-         // var obj = ticketstatus[index];
-          //ticketstatus='Close';
-         
-         // tickets.push(ticketstatus);
-      
-                 
-            
-          //localStorage.setItem("TICKET", JSON.stringify(this.tickets));
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+            let index = tickets.findIndex(obj => obj.id == ticketId); // This should return index
+            let ticketObj = tickets[index];
+            //update ticket status to close
+            ticketObj["ticketstatus"] = "close";
+            //update the modified object to tickets array
+            tickets[index] = ticketObj;
+            //update in localStorage
+            localStorage.setItem("TICKET", JSON.stringify(tickets));
         }
         displaytickets();
     </script>
