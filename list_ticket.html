@@ -19,12 +19,7 @@
         rel="stylesheet">
     <script src="modules/index.js"></script>
     <script src="modules/ticket.js"></script>
-    <style>
-        #media #viewDetails {
-            font-size: 20px;
-            font-family: American Typewriter, serif;
-        }
-    </style>
+   <link rel="stylesheet" href="assets/css/list_ticket.css">
 </head>
 
 <body>
@@ -40,15 +35,14 @@
 
             </div>
             <div class="table-div" id='card-table'>
+              
                 <table class="table">
                     <thead>
                         <tr>
                             <th> S.no </th>
                             <th> Title </th>
                             <th> Email </th>
-                            <th> Department</th>
                             <th>Priority</th>
-                            <th>Mobile Number</th>
                             <th>Status</th>
                             <th>Close Ticket</th>
                             <th>View Details</th>
@@ -62,23 +56,62 @@
 
         </div>
     </main>
-
     <hr>
-
-    <section id="media" style="margin-top: 20px;">
+    <div id="page-content">
+       
         <div class="container">
             <div class="row">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Complete Detail</h5>
-
-                        <div id="viewDetails" class="border">
-
-                        </div>
-                    </div>
+                <div class="about-content">
+                    <h2><span>View Complete Detail Of Generated Tickets</span></h2>
                 </div>
-
+                <div class="col-5">
+                    <table class="table" id="tablestyle">
+                        <thead>
+                           
+                            <tr>
+                                <td> Title </td>
+                            </tr>
+                            <tr>
+                                <td>Customer Name</td>
+                            </tr>
+                            <tr>
+                                <td> Email </td>
+                            </tr>
+                            <tr>
+                                <td> Department</td>
+                            </tr>
+                            <tr>
+                                <td>Priority</td>
+                            </tr>
+                            <tr>
+                                <td>Problem</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile Number</td>
+                            </tr>
+                            <tr>
+                                <td>Ticket Status</td>
+                            </tr>
+                            <tr>
+                                <td>Date Of Generated Ticket</td>
+                            </tr>
+                           
+    
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-6" >
+                    <div id="details"></div>
+                        </div>
+         
+        </div>
             </div>
+        </div>
+            
+ 
+
+    <section id="media" style="margin-top: 20px;">
+       
         </div>
         <br><br>
         <div class="container">
@@ -193,8 +226,8 @@
             if (tickets.length > 0) {
                 for (var obj of tickets) {
 
-                    let closeBtn = `<button id='close' onclick="close1('${obj.ticketstatus}')">Close Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>" + obj.department + "</td><td>" + obj.priority + "</td><td>" + obj.tel + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td><button onclick='viewdetails(" + obj.tel + ")'>View details</button></td><td><button onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1('${obj.ticketstatus}')">Close&nbsp;Ticket</button>`;
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -221,15 +254,17 @@
             let index = tickets.findIndex(obj => obj.tel == views);
             console.log(index);
             var obj = tickets[index];
-            var newticket = 'Title: &nbsp;' + obj.title + '<br>' + 'Customer Name: &nbsp;' + obj.cname + '<br>' + 'Email: &nbsp' + obj.email + '<br>' + 'Department: &nbsp' + obj.department + '<br>' + 'Priority: &nbsp' + obj.priority
-                + '<br>' + 'Problem: &nbsp' + obj.textarea + '<br>' + 'Mobile Number: &nbsp;' + obj.tel + '<br>' + 'Status: &nbsp' + obj.ticketstatus
-                + '<br>' + 'Date: &nbsp;' + obj.date;
-            document.getElementById('viewDetails').innerHTML = newticket;
+            var newticket =   obj.title + '<br>' +  obj.cname + '<br>' +   obj.email + '<br>' +  obj.department + '<br>' +  obj.priority
+                + '<br>' +  obj.textarea + '<br>' +  obj.tel + '<br>' + obj.ticketstatus
+                + '<br>' +  obj.date;
+            document.getElementById('details').innerHTML = newticket;
+           
         }
        
        function close1(ticketId) {
             var tickets = new addTicket().list();
             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+           
             let index = tickets.findIndex(obj => obj.id == ticketId); // This should return index
             let ticketObj = tickets[index];
             //update ticket status to close
