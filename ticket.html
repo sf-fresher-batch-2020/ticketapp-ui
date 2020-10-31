@@ -30,6 +30,9 @@
            
                 <form onsubmit="ticket()" autocomplete="off">
                     <div class="about-content">
+                        <div id="username">
+
+                        </div>
                         <h2><span>Add New Ticket</span></h2>
                     </div>
                     <label>Title</label><br/>
@@ -183,6 +186,8 @@
       </script>
     <script>
         $("#header").load("components/_header.html");
+        var obj = JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
+        document.getElementById("username").innerHTML= "Welcome" + " " + obj.name + " " ;
        function ticket()
        {
            event.preventDefault();
@@ -196,10 +201,12 @@
            var date= document.getElementById("date") .value; 
       
           let loggedInUser= JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
+         
           console.log(loggedInUser);  
       var userObj={title: title, email :email, department :department, 
         priority :priority,textarea: textarea, tel: tel,cname: cname, date: date , ticketstatus: 'Open',
      createdBy: loggedInUser.Id};
+    
       console.log(userObj);
       var addTicketObj= new addTicket();
       let result= addTicketObj.ticket(userObj);
