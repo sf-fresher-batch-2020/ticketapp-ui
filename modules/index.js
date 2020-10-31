@@ -17,9 +17,9 @@ else{
 
 }
 
-function logout(){
+/*function logout(){
    localStorage.clear();
     localStorage.removeItem("LOGGED_IN_USER");
     window.location.href = "login.html";
-}
+}*/
 
