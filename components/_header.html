@@ -38,7 +38,7 @@
                 <a class="nav-link" href="" data-loggedin="true" style="display: block;">Welcome </a>
             </li>
             <li class="nav-item ">
-               <a class="nav-link" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
+               <a class="nav-link logout" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
             </li>
         </ul>
        
@@ -69,7 +69,7 @@
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
     }*/
-    $(".nav-link").click(function(){
+    $(".logout").click(function(){
         var _id=$(this).attr("signout");
          localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
