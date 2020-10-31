@@ -47,8 +47,8 @@
                         <input class="btns" type="submit" value="login"> <p class="mt-2">&nbsp;or&nbsp;</p>
                         <div id="signin" class="g-signin2 m-2" data-onsuccess="onSignIn"></div>
                         <div id="loggedin">
-                            <div id="userdetail"></div>
-                            <a id="signout" href="#" onclick="signOut();">Sign out</a>
+                           <div id="userdetail"></div>
+                            <a id="signout" href="index.html" onclick="signOut();">Sign out</a>
                         </div>
                     </div>
                     <br />
@@ -72,6 +72,7 @@
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
             let user = { id: profile.getId(), name: profile.getName(), photoUrl: profile.getImageUrl(), email: profile.getEmail() };
             localStorage.setItem("LOGGED_IN_USER", JSON.stringify(user));
+            window.location.href = "ticket.html";
             console.log(user);
             checkLoggedIn();
         }
