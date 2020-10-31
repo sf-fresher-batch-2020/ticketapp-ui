@@ -22,14 +22,4 @@ else{
     localStorage.removeItem("LOGGED_IN_USER");
     window.location.href = "login.html";
 }*/
-function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-                localStorage.removeItem("LOGGED_IN_USER");
-                checkLoggedIn();
-               window.location.href = "login.html";
-                
-            });
-      }
-    
+
