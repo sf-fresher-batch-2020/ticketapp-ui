@@ -36,7 +36,16 @@ body {
 #page-content{
     margin-top:100px;
 }
-
+#username{
+  color: #252525;
+  font-family: "roboto";
+  font-size: 25px;
+  font-weight: 100;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
   /* Full-width inputs */
   input[type=email], input[type=password],input[type=text],input[type=tel],input[type=date] {
     width: 100%;
