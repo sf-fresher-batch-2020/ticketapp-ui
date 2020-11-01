@@ -19,7 +19,45 @@
         rel="stylesheet">
     <script src="modules/index.js"></script>
     <script src="modules/ticket.js"></script>
-   <link rel="stylesheet" href="assets/css/list_ticket.css">
+
+    <link rel="stylesheet" href="assets/css/list_ticket.css">
+    <style>
+        select {
+            -webkit-appearance: button;
+            -moz-appearance: button;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -webkit-padding-end: 20px;
+            -moz-padding-end: 20px;
+            -webkit-padding-start: 2px;
+            -moz-padding-start: 2px;
+            background-color: #F07575;
+            /* Fallback color if gradients are not supported */
+            background-image: -webkit-linear-gradient(top, #E5E5E5, #F4F4F4);
+            /* For Chrome and Safari */
+            background-image: -moz-linear-gradient(top, #E5E5E5, #F4F4F4);
+            /* For old Firefox (3.6 to 15) */
+            background-image: -ms-linear-gradient(top, #E5E5E5, #F4F4F4);
+            /* For pre-releases of Internet Explorer  10*/
+            background-image: -o-linear-gradient(top, #E5E5E5, #F4F4F4);
+            /* For old Opera (11.1 to 12.0) */
+            background-image: linear-gradient(to bottom, #E5E5E5, #F4F4F4);
+            /* Standard syntax; must be last */
+            background-position: center right;
+            background-repeat: no-repeat;
+            border: 1px solid #AAA;
+            border-radius: 2px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+            color: #555;
+            font-size: inherit;
+            margin: 0;
+            overflow: hidden;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,22 +67,44 @@
     <main class="container-fluid">
         <div id="page-content">
             <div class="about-content">
-                <h2><span>List Of Generated Tickets</span></h2>
+                <div id="username">
+
+                </div>
+                
             </div>
+            <form onsubmit="assign()" id="assignto" class="row justify-content-center">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons" id="assignTo">
+                    <label class=" btn btn-danger">
+                        <input type="radio" value="techteam" id="techteam" required> Tech team
+                    </label>
+                    <br>
+                    <label class="btn btn-danger">
+                        <input type="radio" value="networkingTeam" id="networkingTeam" required> Networking Team
+                    </label>
+                    <label class="btn btn-danger">
+                        <input type="radio" value="softwareTeam" id="softwareTeam" required> Software Team
+                    </label>
+                    <label class="btn btn-danger">
+                        <input type="radio" value="operatingTeam" id="operatingTeam" required> Operating Team
+                    </label>
+                </div>
+                
+            </form>
             <div id="message">
 
             </div>
             <div class="table-div" id='card-table'>
-              
-                <table class="table">
+
+                <table class="table" id="tblContainer">
                     <thead>
                         <tr>
                             <th> S.no </th>
                             <th> Token Id</th>
+                            <th>Email Id</th>
                             <th> Title </th>
-                            <th> Email </th>
                             <th>Priority</th>
                             <th>Status</th>
+                            <th>Assign Ticket</th>
                             <th>Close Ticket</th>
                             <th>View Details</th>
                             <th>Delete Ticket</th>
@@ -59,7 +119,7 @@
     </main>
     <hr>
     <div id="page-content">
-       
+
         <div class="container">
             <div class="row">
                 <div class="about-content">
@@ -68,9 +128,9 @@
                 <div class="col-5">
                     <table class="table" id="tablestyle">
                         <thead>
-                           <tr>
-                               <td>Token Id</td>
-                           </tr>
+                            <tr>
+                                <td>Token Id</td>
+                            </tr>
                             <tr>
                                 <td> Title </td>
                             </tr>
@@ -98,23 +158,23 @@
                             <tr>
                                 <td>Date Of Generated Ticket</td>
                             </tr>
-                           
-    
+
+
                         </thead>
                     </table>
                 </div>
-                <div class="col-6" >
+                <div class="col-6">
                     <div id="details"></div>
-                        </div>
-         
-        </div>
+                </div>
+
             </div>
         </div>
-            
- 
+    </div>
+
+
 
     <section id="media" style="margin-top: 20px;">
-       
+
         </div>
         <br><br>
         <div class="container">
@@ -218,17 +278,22 @@
     </footer>
     <script>
         $("#header").load("components/_headertech.html");
-
+    </script>
+    <script>
+        var obj = JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
+        document.getElementById("username").innerHTML = "Welcome" + " " + obj.name + " ";
         function displaytickets() {
+
             var tickets = new addTicket().list();
+
             console.log(tickets);
-          
+
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-                   
+                    let assignto= `<button  class="btn btn-secondary" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno +"</td><td>" + obj.id + "</td><td>"+ obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ assignto +"</td><td>"+ closeBtn + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -252,36 +317,57 @@
             console.log(views);
             var tickets = new addTicket().list();
             console.log(tickets);
-        
+
             let index = tickets.findIndex(obj => obj.tel == views);
             console.log(index);
             var obj = tickets[index];
-            var newticket = obj.id + '<br>' +  obj.title + '<br>' +  obj.cname + '<br>' +   obj.email + '<br>' +  obj.department + '<br>' +  obj.priority
-                + '<br>' +  obj.textarea + '<br>' +  obj.tel + '<br>' + obj.ticketstatus
-                + '<br>' +  obj.date;
+            var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.priority
+                + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus
+                + '<br>' + obj.date;
             document.getElementById('details').innerHTML = newticket;
-           
+
         }
-       
-       function close1(id) {
+
+        function close1(id) {
             var ticketid;
             var tickets = new addTicket().list();
             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
             let index = tickets.findIndex(obj => obj.id == id); // This should return index
-           
+
             let ticketObj = tickets[index];
             //update ticket status to close
             ticketObj["ticketstatus"] = "Close";
             //update the modified object to tickets array
             tickets[index] = ticketObj;
-           
+
             //update in localStorage
             localStorage.setItem("TICKET", JSON.stringify(tickets));
             location.reload();
-            
+
         }
+        function assign() {
+            //var assignTo = document.getElementById('assignTo').value;
+            if (document.getElementById('techteam').checked) {
+                assignTo = document.getElementById('techteam').value;
+            }
+            else if (document.getElementById('networkingTeam').checked) {
+                assignTo = document.getElementById('networkingTeam').value;
+            }
+            else if (document.getElementById('softwareTeam').checked) {
+                assignTo = document.getElementById('softwareTeam').value;
+            }
+            else if (document.getElementById('operatingTeam').checked) {
+                assignTo = document.getElementById('operatingTeam').value;
+            }
+            var userObj = { "assignTo": assignTo };
+            console.log(assignTo);
+            var addTicketObj = new assigned();
+            let result = addTicketObj.assign(userObj);
+        }
+
         displaytickets();
     </script>
+    <script src="modules/techdashboard.js"></script>
 </body>
 
 </html>
