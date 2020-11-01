@@ -104,8 +104,8 @@
                             <th> Title </th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th>Assign Ticket</th>
                             <th>Close Ticket</th>
+                            <th>Assign Ticket</th>
                             <th>View Details</th>
                             <th>Delete Ticket</th>
                         </tr>
@@ -291,9 +291,9 @@
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-                    let assignto= `<button  class="btn btn-secondary" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
+                    let assignto= `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ assignto +"</td><td>"+ closeBtn + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td>"+ assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -359,6 +359,7 @@
             else if (document.getElementById('operatingTeam').checked) {
                 assignTo = document.getElementById('operatingTeam').value;
             }
+            
             var userObj = { "assignTo": assignTo };
             console.log(assignTo);
             var addTicketObj = new assigned();
