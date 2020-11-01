@@ -39,6 +39,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            
                             <th> S.no </th>
                             <th> Title </th>
                             <th> Email </th>
@@ -213,22 +214,22 @@
         </div>
 
     </footer>
-     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
         $("#header").load("components/_header.html");
 
         function displaytickets() {
             var tickets = new addTicket().list();
-            this.loggedInUser = { Id: 1 };
             var data = JSON.parse(localStorage.getItem("TICKET")) || [];
-            data.filter(obj => obj.createdBy == loggedInUser.Id);
+            this.loggedInUser =JSON.parse(localStorage.LOGGED_IN_USER);
+            var tickets= data.filter(obj => obj.createdBy == loggedInUser.Id);
             console.log(tickets);
+          
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-
-                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1('${obj.ticketstatus}')">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                   
+                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1('${obj.id}')">Close&nbsp;Ticket</button>`;
+                    var new_row = "<tr><td>" + ++sno +"</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -252,6 +253,7 @@
             console.log(views);
             var tickets = new addTicket().list();
             console.log(tickets);
+        
             let index = tickets.findIndex(obj => obj.tel == views);
             console.log(index);
             var obj = tickets[index];
@@ -262,18 +264,22 @@
            
         }
        
-       function close1(ticketId) {
+       function close1(id) {
+            var ticketid;
             var tickets = new addTicket().list();
             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+            let index = tickets.findIndex(obj => obj.id == ticketid); // This should return index
            
-            let index = tickets.findIndex(obj => obj.id == ticketId); // This should return index
             let ticketObj = tickets[index];
             //update ticket status to close
-            ticketObj["ticketstatus"] = "close";
+            ticketObj["ticketstatus"] = "Close";
             //update the modified object to tickets array
             tickets[index] = ticketObj;
+           
             //update in localStorage
             localStorage.setItem("TICKET", JSON.stringify(tickets));
+            //location.reload();
+            
         }
         displaytickets();
     </script>
