@@ -41,6 +41,7 @@
                         <tr>
                             
                             <th> S.no </th>
+                            <th> Token Id</th>
                             <th> Title </th>
                             <th> Email </th>
                             <th>Priority</th>
@@ -68,7 +69,9 @@
                 <div class="col-5">
                     <table class="table" id="tablestyle">
                         <thead>
-                           
+                           <tr>
+                               <td>Token Id</td>
+                           </tr>
                             <tr>
                                 <td> Title </td>
                             </tr>
@@ -228,8 +231,8 @@
             if (tickets.length > 0) {
                 for (var obj of tickets) {
                    
-                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1('${obj.id}')">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno +"</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
+                    var new_row = "<tr><td>" + ++sno +"</td><td>" + obj.id + "</td><td>"+ obj.title + "</td><td>" + obj.email + "</td><td>"  + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -257,7 +260,7 @@
             let index = tickets.findIndex(obj => obj.tel == views);
             console.log(index);
             var obj = tickets[index];
-            var newticket =   obj.title + '<br>' +  obj.cname + '<br>' +   obj.email + '<br>' +  obj.department + '<br>' +  obj.priority
+            var newticket = obj.id + '<br>' +  obj.title + '<br>' +  obj.cname + '<br>' +   obj.email + '<br>' +  obj.department + '<br>' +  obj.priority
                 + '<br>' +  obj.textarea + '<br>' +  obj.tel + '<br>' + obj.ticketstatus
                 + '<br>' +  obj.date;
             document.getElementById('details').innerHTML = newticket;
@@ -268,7 +271,7 @@
             var ticketid;
             var tickets = new addTicket().list();
             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
-            let index = tickets.findIndex(obj => obj.id == ticketid); // This should return index
+            let index = tickets.findIndex(obj => obj.id == id); // This should return index
            
             let ticketObj = tickets[index];
             //update ticket status to close
@@ -278,7 +281,7 @@
            
             //update in localStorage
             localStorage.setItem("TICKET", JSON.stringify(tickets));
-            //location.reload();
+            location.reload();
             
         }
         displaytickets();
