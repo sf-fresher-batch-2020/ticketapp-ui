@@ -175,10 +175,16 @@
             let obj = { "email": email, "password": password, "logintype": logintype};
             console.log(obj);
             var loginserviceobj = new LoginService();
-            loginserviceobj.login(email, password, logintype);
+            
             var user = loginserviceobj.login(email, password, logintype);
+            console.log(user);
             if (user) {
-                window.location.href = "ticket.html";
+                if ( user.logintype=='u') {
+                    window.location.href="ticket.html";
+                }
+                else if (user.logintype=="Admin"){ 
+                    window.location.href="techdashboard.html
+                }
             }
             else {
                 document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>Invalid Email or Password</div>";
