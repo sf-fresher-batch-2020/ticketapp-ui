@@ -38,7 +38,7 @@
                 <a class="nav-link" href="" data-loggedin="true" style="display: block;">Welcome </a>
             </li>
             <li class="nav-item ">
-               <a class="nav-link" id="signout" href="#" onclick="signOut()" data-loggedin="true">(Logout) </a>
+               <a class="nav-link" id="signout" href="#" onclick="logout()" data-loggedin="true">(Logout) </a>
             </li>
         </ul>
        
@@ -64,24 +64,12 @@
         document.querySelectorAll(".nav-link[data-loggedin=false], .nav-item[data-loggedin=false] , .dropdown-item[data-loggedin=false]").forEach(obj => obj.style.display= "block" );
     
     }
-    </script>
-   /* function logout(){
+   
+   function logout(){
        // localStorage.clear();
         localStorage.removeItem("LOGGED_IN_USER");
         window.location.href = "login.html";
-    }*/
-   <script src="https://apis.google.com/js/platform.js" async defer></script>
-     <script>
-         function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-                localStorage.removeItem("LOGGED_IN_USER");
-                checkLoggedIn();
-               window.location.href = "login.html";
-                
-            });
-      }
-    
+    }
+   
    
     </script>
