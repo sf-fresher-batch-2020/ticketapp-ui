@@ -12,12 +12,13 @@ text-align: center;
 border-color: cornsilk;
 }
  #details {
-padding-top: 8px;
+     padding: 5px;
+padding-top: 2px;
 margin-left: -30px;
 border-style: groove;
 color:black;
-font-size: 30px;
+font-size: 31px;
 text-align:left;
-height:424px;
+height:471px;
 width:650px;
 }
