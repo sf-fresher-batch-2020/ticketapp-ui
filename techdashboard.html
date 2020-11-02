@@ -89,7 +89,7 @@
                     </label>
                 </div>
             </form>
-         
+
             <div id="message">
 
             </div>
@@ -117,69 +117,68 @@
     </main>
     <hr>
     <div id="page-content">
-
-        <div class="container">
-            <div class="row">
-                <div class="about-content">
-                    <h2><span>View Complete Detail Of Generated Tickets</span></h2>
-                </div>
-                <div class="col-5">
-                    <div id='cardtable'>
-                        <table class="table" id="tablestyle">
-                            <thead>
-                                <tr>
-                                    <td>Token Id</td>
-                                </tr>
-                                <tr>
-                                    <td> Title </td>
-                                </tr>
-                                <tr>
-                                    <td>Customer Name</td>
-                                </tr>
-                                <tr>
-                                    <td> Email </td>
-                                </tr>
-                                <tr>
-                                    <td> Department</td>
-                                </tr>
-                                <tr>
-                                    <td>Assigned To</td>
-                                </tr>
-                                <tr>
-                                    <td>Priority</td>
-                                </tr>
-                                <tr>
-                                    <td>Problem</td>
-                                </tr>
-                                <tr>
-                                    <td>Mobile Number</td>
-                                </tr>
-                                <tr>
-                                    <td>Ticket Status</td>
-                                </tr>
-                                <tr>
-                                    <td>Date Of Generated Ticket</td>
-                                </tr>
-                                <tr>
-                                    <td>Action</td>
-                                </tr>
-                            </thead>
-                        </table>
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="about-content">
+                        <h2><span>View Complete Detail Of Generated Tickets</span></h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <table border="1" class="table" id="tablestyle">
+                                <thead>
+                                    <tr>
+                                        <td>Token Id</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Title </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Customer Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Email </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Department</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assigned To</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Priority</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Problem</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile Number</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ticket Status</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Of Generated Ticket</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-8 ml-auto">
+                            <div id="details"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div id="details"></div>
-                </div>
-
             </div>
         </div>
     </div>
-
-
-
     <section id="media" style="margin-top: 20px;">
-
-        </div>
         <br><br>
         <div class="container">
             <div class="row justify-content-center">
@@ -296,8 +295,8 @@
             if (tickets.length > 0) {
                 for (var obj of tickets) {
                     let assignto = `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
-                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"  + assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
+                    let closeBtn = `<button id='close' class="btn btn-secondary"  onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + assignto + "</td><td><button  class='btn btn-success' data-toggle='modal' data-target='.bd-example-modal-lg' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -318,6 +317,7 @@
             location.reload();
         }
         function viewdetails(views) {
+
             console.log(views);
             var tickets = new addTicket().list();
             console.log(tickets);
@@ -327,13 +327,11 @@
             if (tickets.length > 0) {
                 var obj = tickets[index];
                 let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>'+ obj.Team + '<br>' + obj.priority
-                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date +'<br>' + closeBtn;
+                var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.Team + '<br>' + obj.priority
+                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date + '<br>' + closeBtn;
 
             }
             document.getElementById('details').innerHTML = newticket;
-
-
         }
 
         function close1(id) {
@@ -368,7 +366,7 @@
                 assignTo = document.getElementById('operatingTeam').value;
             }
             let users = JSON.parse(localStorage.getItem("USERS")) || [];
-            console.log(assignTo); 
+            console.log(assignTo);
             let members = users.filter(obj => obj.team == assignTo);
             console.log(members);
             let content = "";
