@@ -70,12 +70,12 @@
                 <div id="username">
 
                 </div>
-                
+
             </div>
             <form onsubmit="assign()" id="assignto" class="row justify-content-center">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons" id="assignTo">
                     <label class=" btn btn-danger">
-                        <input type="radio" value="techteam" id="techteam" required> Tech team
+                        <input type="radio" value="HardwareTeam" id="techteam" required> Hardware team
                     </label>
                     <br>
                     <label class="btn btn-danger">
@@ -88,7 +88,6 @@
                         <input type="radio" value="operatingTeam" id="operatingTeam" required> Operating Team
                     </label>
                 </div>
-                
             </form>
             <div id="message">
 
@@ -99,7 +98,7 @@
                     <thead>
                         <tr>
                             <th> S.no </th>
-                            <th> Id</th>
+                            <th> Token Id</th>
                             <th>Email Id</th>
                             <th> Title </th>
                             <th>Priority</th>
@@ -107,7 +106,7 @@
                             <th>Close Ticket</th>
                             <th>Assign Ticket</th>
                             <th>View Details</th>
-                           
+                            <th>Delete Ticket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,42 +125,42 @@
                     <h2><span>View Complete Detail Of Generated Tickets</span></h2>
                 </div>
                 <div class="col-5">
-                    <table class="table" id="tablestyle">
-                        <thead>
-                            <tr>
-                                <td>Id</td>
-                            </tr>
-                            <tr>
-                                <td> Title </td>
-                            </tr>
-                            <tr>
-                                <td>Customer Name</td>
-                            </tr>
-                            <tr>
-                                <td> Email </td>
-                            </tr>
-                            <tr>
-                                <td> Department</td>
-                            </tr>
-                            <tr>
-                                <td>Priority</td>
-                            </tr>
-                            <tr>
-                                <td>Problem</td>
-                            </tr>
-                            <tr>
-                                <td>Mobile Number</td>
-                            </tr>
-                            <tr>
-                                <td>Ticket Status</td>
-                            </tr>
-                            <tr>
-                                <td>Date Of Generated Ticket</td>
-                            </tr>
-
-
-                        </thead>
-                    </table>
+                    <div id='cardtable'>
+                        <table class="table" id="tablestyle">
+                            <thead>
+                                <tr>
+                                    <td>Token Id</td>
+                                </tr>
+                                <tr>
+                                    <td> Title </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer Name</td>
+                                </tr>
+                                <tr>
+                                    <td> Email </td>
+                                </tr>
+                                <tr>
+                                    <td> Department</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority</td>
+                                </tr>
+                                <tr>
+                                    <td>Problem</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile Number</td>
+                                </tr>
+                                <tr>
+                                    <td>Ticket Status</td>
+                                </tr>
+                                <tr>
+                                    <td>Date Of Generated Ticket</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
                 <div class="col-6">
                     <div id="details"></div>
@@ -291,9 +290,9 @@
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-                    let assignto= `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
+                    let assignto = `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td>"+ assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td>" + assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -303,7 +302,16 @@
                 document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>No Ticket Available.</div>";
             }
         }
-       
+        function deleteRecord(num) {
+            console.log("Going to delete");
+            console.log(num);
+            let tickets = new addTicket().list();
+            let index = tickets.findIndex(obj => obj.tel == num);
+            tickets.splice(index, 1);
+            console.log(index);
+            localStorage.setItem("TICKET", JSON.stringify(tickets));
+            location.reload();
+        }
         function viewdetails(views) {
             console.log(views);
             var tickets = new addTicket().list();
@@ -311,11 +319,15 @@
 
             let index = tickets.findIndex(obj => obj.tel == views);
             console.log(index);
-            var obj = tickets[index];
-            var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.priority
-                + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus
-                + '<br>' + obj.date;
+            if (tickets.length > 0) {
+                var obj = tickets[index];
+                let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
+                var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.priority
+                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '' + closeBtn + '<br>' + obj.date;
+
+            }
             document.getElementById('details').innerHTML = newticket;
+
 
         }
 
@@ -336,7 +348,7 @@
             location.reload();
 
         }
-        function assign() {
+        function assign(team) {
             //var assignTo = document.getElementById('assignTo').value;
             if (document.getElementById('techteam').checked) {
                 assignTo = document.getElementById('techteam').value;
@@ -350,11 +362,14 @@
             else if (document.getElementById('operatingTeam').checked) {
                 assignTo = document.getElementById('operatingTeam').value;
             }
-            
-            var userObj = { "assignTo": assignTo };
+            let users = JSON.parse(localStorage.getItem("USERS")) || [];
+            let members = users.filter(obj => obj.team == team);
+            console.log(members);
+
+            /*var userObj = { "assignTo": assignTo };
             console.log(assignTo);
             var addTicketObj = new assigned();
-            let result = addTicketObj.assign(userObj);
+            let result = addTicketObj.assign(userObj);*/
         }
 
         displaytickets();
