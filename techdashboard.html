@@ -72,7 +72,7 @@
                 </div>
 
             </div>
-            <form onsubmit="assign()" id="assignto" class="row justify-content-center">
+            <form onsubmit="assign(this.value)" id="assignto" class="row justify-content-center">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons" id="assignTo">
                     <label class=" btn btn-danger">
                         <input type="radio" value="hardwareTeam" id="techteam" required> Hardware team
@@ -89,6 +89,7 @@
                     </label>
                 </div>
             </form>
+         
             <div id="message">
 
             </div>
@@ -103,10 +104,8 @@
                             <th> Title </th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th>Close Ticket</th>
                             <th>Assign Ticket</th>
                             <th>View Details</th>
-                            <th>Delete Ticket</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,6 +143,9 @@
                                     <td> Department</td>
                                 </tr>
                                 <tr>
+                                    <td>Assigned To</td>
+                                </tr>
+                                <tr>
                                     <td>Priority</td>
                                 </tr>
                                 <tr>
@@ -157,6 +159,9 @@
                                 </tr>
                                 <tr>
                                     <td>Date Of Generated Ticket</td>
+                                </tr>
+                                <tr>
+                                    <td>Action</td>
                                 </tr>
                             </thead>
                         </table>
@@ -292,7 +297,7 @@
                 for (var obj of tickets) {
                     let assignto = `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + closeBtn + "</td><td>" + assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"  + assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -322,8 +327,8 @@
             if (tickets.length > 0) {
                 var obj = tickets[index];
                 let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.priority
-                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '' + closeBtn + '<br>' + obj.date;
+                var newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>'+ obj.Team + '<br>' + obj.priority
+                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date +'<br>' + closeBtn;
 
             }
             document.getElementById('details').innerHTML = newticket;
@@ -350,7 +355,6 @@
         }
         function assign(team) {
             //var assignTo = document.getElementById('assignTo').value;
-            let assignTo = null;
             if (document.getElementById('techteam').checked) {
                 assignTo = document.getElementById('techteam').value;
             }
@@ -363,10 +367,23 @@
             else if (document.getElementById('operatingTeam').checked) {
                 assignTo = document.getElementById('operatingTeam').value;
             }
-            console.log(assignTo);
             let users = JSON.parse(localStorage.getItem("USERS")) || [];
+            console.log(assignTo); 
             let members = users.filter(obj => obj.team == assignTo);
             console.log(members);
+            let content = "";
+            for (let m of members) {
+                content += `${m.name}`;
+            }
+            console.log(content);
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+            let index = tickets.findIndex(obj => obj.team == team);
+            let ticketObj = tickets[index];
+            ticketObj["Team"] = content;
+            tickets[index] = ticketObj;
+            console.log(ticketObj);
+            localStorage.setItem("TICKET", JSON.stringify(tickets));
+            location.reload();
 
             /*var userObj = { "assignTo": assignTo };
             console.log(assignTo);
