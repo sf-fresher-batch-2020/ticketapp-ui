@@ -22,11 +22,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
-</head>
-
-
-
-
+    </head>
 <body>
     <header id="header">
         <!-- Load Header content-->
@@ -45,23 +41,34 @@
                     <input type="password" name="pass" id="password" placeholder="password" required></br>
 
                     <input type="date" value="" id="dob"></br>
-                    <select id="team">
-                        <option value="">--Only For Admin--</option>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-success">
+                            <input type="radio" name="login_type" value="u" id="u" checked>user
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input onclick="handleClick(this);" type="radio" name="login_type" value="Admin"
+                                id="Admin">Technical
+                            department(Admin)
+                        </label>
+                    </div><br>
+                    <select id="team" disabled>
+                        <option>--Only For Admin--</option>;
                         <option value="hardwareTeam">Hardware Team</option>
                         <option value="networkingTeam">Networking Team</option>
                         <option value="softwareTeam">Software Team</option>
                         <option value="operatingTeam">Operating Team</option>
-                    </select></br>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-success">
-                            <input type="radio" name="login_type" value="u" id="u">user
-                        </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="login_type" value="Admin" id="Admin">Technical department(Admin)
-                        </label>
-                    </div>
+                    </select>
                     </br><br>
-
+                    <script>
+                        function handleClick(myRadio) {
+                            if (myRadio.value == "Admin") {
+                                document.getElementById("team").disabled = false;
+                            }
+                            else {
+                                document.getElementById("team").disabled = true;
+                            }
+                        }
+                    </script>
             </div>
             <div class="row justify-content-center">
                 <input class="btns" type="submit" value="Register">
@@ -70,12 +77,7 @@
 
             </div>
             </form>
-
-
     </main>
-
-
-
     <hr><br><br>
     <section id="media" style="margin-top: 20px;">
         <div class="container">
@@ -213,7 +215,7 @@
             else {
                 toastr.warning("registration failed");
             }
-          
+
         }
 
     </script>
