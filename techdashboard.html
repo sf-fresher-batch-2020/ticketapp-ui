@@ -107,7 +107,7 @@
                             <th>Close Ticket</th>
                             <th>Assign Ticket</th>
                             <th>View Details</th>
-                            <th>Delete Ticket</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -293,7 +293,7 @@
                 for (var obj of tickets) {
                     let assignto= `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td>"+ assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td><td><button class='btn btn-danger' onclick='deleteRecord(" + obj.tel + ")'>Delete</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>"  + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+ closeBtn +"</td><td>"+ assignto + "</td><td><button  class='btn btn-success' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -303,16 +303,7 @@
                 document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>No Ticket Available.</div>";
             }
         }
-        function deleteRecord(num) {
-            console.log("Going to delete");
-            console.log(num);
-            let tickets = new addTicket().list();
-            let index = tickets.findIndex(obj => obj.tel == num);
-            tickets.splice(index, 1);
-            console.log(index);
-            localStorage.setItem("TICKET", JSON.stringify(tickets));
-            location.reload();
-        }
+       
         function viewdetails(views) {
             console.log(views);
             var tickets = new addTicket().list();
