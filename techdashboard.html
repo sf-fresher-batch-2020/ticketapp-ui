@@ -350,6 +350,7 @@
         }
         function assign(team) {
             //var assignTo = document.getElementById('assignTo').value;
+            let assignTo = null;
             if (document.getElementById('techteam').checked) {
                 assignTo = document.getElementById('techteam').value;
             }
@@ -362,8 +363,9 @@
             else if (document.getElementById('operatingTeam').checked) {
                 assignTo = document.getElementById('operatingTeam').value;
             }
+            console.log(assignTo);
             let users = JSON.parse(localStorage.getItem("USERS")) || [];
-            let members = users.filter(obj => obj.team == team);
+            let members = users.filter(obj => obj.team == assignTo);
             console.log(members);
 
             /*var userObj = { "assignTo": assignTo };
