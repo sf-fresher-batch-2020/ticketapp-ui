@@ -72,23 +72,6 @@
                 </div>
 
             </div>
-            <form onsubmit="assign(this.value)" id="assignto" class="row justify-content-center">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons" id="assignTo">
-                    <label class=" btn btn-danger">
-                        <input type="radio" value="hardwareTeam" id="techteam" required> Hardware team
-                    </label>
-                    <br>
-                    <label class="btn btn-danger">
-                        <input type="radio" value="networkingTeam" id="networkingTeam" required> Networking Team
-                    </label>
-                    <label class="btn btn-danger">
-                        <input type="radio" value="softwareTeam" id="softwareTeam" required> Software Team
-                    </label>
-                    <label class="btn btn-danger">
-                        <input type="radio" value="operatingTeam" id="operatingTeam" required> Operating Team
-                    </label>
-                </div>
-            </form>
 
             <div id="message">
 
@@ -104,7 +87,7 @@
                             <th> Title </th>
                             <th>Priority</th>
                             <th>Status</th>
-                            <th>Assign Ticket</th>
+                            
                             <th>View Details</th>
                         </tr>
                     </thead>
@@ -279,6 +262,8 @@
         </div>
 
     </footer>
+    <script src="modules/util.js"></script>
+    <script src="modules/techdashboard.js"></script>
     <script>
         $("#header").load("components/_headertech.html");
     </script>
@@ -296,7 +281,10 @@
                 for (var obj of tickets) {
                     let assignto = `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary"  onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + assignto + "</td><td><button  class='btn btn-success' data-toggle='modal' data-target='.bd-example-modal-lg' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
+                    //let viewBtn = `<button  class='btn btn-success' data-toggle='modal' data-target='.bd-example-modal-lg' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button>`;
+                    let viewBtn=`<a href="view_details.html?ticketId=${obj.id}"><button class="btn btn-success">View</button></a>`;
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + viewBtn + 
+                        "</td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
@@ -389,9 +377,11 @@
             let result = addTicketObj.assign(userObj);*/
         }
 
+       
         displaytickets();
     </script>
-    <script src="modules/techdashboard.js"></script>
+     
+   
 </body>
 
 </html>
