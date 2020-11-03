@@ -22,7 +22,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
-    </head>
+</head>
+
+
+
+
 <body>
     <header id="header">
         <!-- Load Header content-->
@@ -51,24 +55,9 @@
                             department(Admin)
                         </label>
                     </div><br>
-                    <select id="team" disabled>
-                        <option>--Only For Admin--</option>;
-                        <option value="hardwareTeam">Hardware Team</option>
-                        <option value="networkingTeam">Networking Team</option>
-                        <option value="softwareTeam">Software Team</option>
-                        <option value="operatingTeam">Operating Team</option>
-                    </select>
-                    </br><br>
-                    <script>
-                        function handleClick(myRadio) {
-                            if (myRadio.value == "Admin") {
-                                document.getElementById("team").disabled = false;
-                            }
-                            else {
-                                document.getElementById("team").disabled = true;
-                            }
-                        }
-                    </script>
+                   
+                    
+                   <br>
             </div>
             <div class="row justify-content-center">
                 <input class="btns" type="submit" value="Register">
@@ -77,7 +66,12 @@
 
             </div>
             </form>
+
+
     </main>
+
+
+
     <hr><br><br>
     <section id="media" style="margin-top: 20px;">
         <div class="container">
@@ -194,7 +188,6 @@
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
             var DOB = document.getElementById("dob").value;
-            var team = document.getElementById("team").value;
             let logintypeOptions = document.getElementsByName("login_type");
 
             for (let option of logintypeOptions) {
