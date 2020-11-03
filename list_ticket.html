@@ -233,10 +233,10 @@
             let sno = 0;
             if (tickets.length > 0) {
                 for (var obj of tickets) {
-
+                    let viewBtn=`<a href="view_ticket.html?ticketId=${obj.id}"><button class="btn btn-success">View</button></a>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
                     let deleterecord = `<button class="btn btn-danger" onclick="deleteRecord(${obj.tel})">Delete</button>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td><button  class='btn btn-success' data-toggle='modal' data-target='.bd-example-modal-lg' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button></td></tr>";
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>"+viewBtn+"</td></tr>";
                     $("table tbody").append(new_row);
                 }
                 document.querySelector("#card-table").style.display = "block";
