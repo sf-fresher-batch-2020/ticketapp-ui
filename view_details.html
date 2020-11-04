@@ -81,6 +81,9 @@
                         <tr>
                             <th>Assigned To</th>
                         </tr>
+                        <tr>
+                            <th>Assigned Team</th>
+                        </tr>
                     </thead>
                 </table>
                
@@ -226,14 +229,14 @@
                 let newticket = "";
                 let content = "";
                 if (obj) {
-                    let assignBtn = `<button  class="btn btn-info" onclick="assign(${obj.ticketid})">Assign&nbsp;To</button>`;
+                    let assignBtn = `<button  class="btn btn-info" onclick="assign(${obj.id})">Assign&nbsp;To</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
                     let assignTo = displayAssignTo();
                     content += `<tr ><td>${obj.id}</td></tr><td>${obj.title}</td></tr><tr><td>${obj.cname}</td></tr>
                     <tr><td>${obj.email}</td></tr><tr><td>${obj.department}</td></tr>
                     <tr><td>${obj.priority}</td></tr><tr><td>${obj.textarea}</td></tr><tr><td>${obj.tel}</td></tr>
                     <tr><td>${obj.ticketstatus}</td></tr><tr><td>${obj.date}</td></tr>
-                    <tr><td>${closeBtn}</td></tr><tr><td>${assignTo}&nbsp;&nbsp;${assignBtn}</td></tr>`;
+                    <tr><td>${closeBtn}</td></tr><tr><td>${assignTo}&nbsp;&nbsp;${assignBtn}</td></tr><tr><td>${obj.Team}</tr></td>`;
                     /*newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.Team + '<br>' + obj.priority
                         + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date + '<br>' + closeBtn + '<br>' + assignTo;
 */
@@ -279,18 +282,18 @@
                 location.reload();
 
             }
-            function assign(ticketid) {
+            function assign(id) {
                 //var assignTo = document.getElementById('assignTo').value;
                 let assignTicket= document.querySelector("#assignTo").value;
                 console.log(assignTicket);
                 var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
-                let index = tickets.findIndex(obj => obj.assignTicket == ticketid);
+                let index = tickets.findIndex(obj => obj.id == id);
                 let ticketObj = tickets[index];
                 ticketObj["Team"] = assignTicket;
                 tickets[index] = ticketObj;
                 console.log(ticketObj);
-                //localStorage.setItem("TICKET", JSON.stringify(tickets));
-                //location.reload();
+                localStorage.setItem("TICKET", JSON.stringify(tickets));
+                location.reload();
 
                 /*var userObj = { "assignTo": assignTo };
                 console.log(assignTo);
