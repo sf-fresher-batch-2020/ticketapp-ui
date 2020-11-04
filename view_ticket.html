@@ -20,7 +20,7 @@
     <script src="modules/index.js"></script>
     <script src="modules/ticket.js"></script>
 
-    <link rel="stylesheet" href="assets/css/view_details.css">
+    <link rel="stylesheet" href="assets/css/view-ticket.css">
 </head>
 
 <body>
@@ -226,13 +226,18 @@
                 let newticket = "";
                 let content = "";
                 if (obj) {
-                    
+                    let changePriorityBtn = `<button id='close' class="btn btn-secondary" onclick="priority(${obj.id})">Update&nbsp;Ticket Priority</button>`;
                     let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
                     let deleterecord = `<button class="btn btn-danger" onclick="deleteRecord(${obj.tel})">Delete&nbsp; Ticket</button>`;
-                    content += `<tr ><td>${obj.id}</td></tr><td>${obj.title}</td></tr><tr><td>${obj.cname}</td></tr>
-                    <tr><td>${obj.email}</td></tr><tr><td>${obj.department}</td></tr>
-                    <tr><td>${obj.priority}</td></tr><tr><td>${obj.textarea}</td></tr><tr><td>${obj.tel}</td></tr>
-                    <tr><td>${obj.ticketstatus}</td></tr><tr><td>${obj.date}</td></tr><tr><td>${obj.Team}</tr></td>
+                    let changepriority= changePriority();
+                    content += `<tr ><td>${obj.id}</td></tr><td>${obj.title}</td></tr>
+                    <tr><td>${obj.cname}</td></tr>
+                    <tr><td>${obj.email}</td></tr>
+                    <tr><td>${obj.department}</td></tr>
+                    <tr><td>${obj.priority}${changepriority}${changePriorityBtn}</td></tr>
+                    <tr><td>${obj.textarea}</td></tr><tr><td>${obj.tel}</td></tr>
+                    <tr><td>${obj.ticketstatus}</td></tr><tr><td>${obj.date}</td></tr>
+                    <tr><td>${obj.Team}</tr></td>
                     <tr><td>${closeBtn}&nbsp;&nbsp;${deleterecord}</td></tr>`;
                     /*newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.Team + '<br>' + obj.priority
                         + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date + '<br>' + closeBtn + '<br>' + assignTo;
@@ -242,7 +247,37 @@
             }
 
             
-
+            function changePriority() {
+            let content = `<select id="changePriority">`;
+            let priority = [
+                { id: "", name: "--Select One Option--" },
+                { id: "Low", name: "Low" },
+                { id: "Medium", name: "Medium" },
+                { id: "High", name: "High" },];
+            for (let obj of priority) {
+                content += `<option value="${obj.id}">${obj.name}</option>`;
+            }
+            content += `</select>`;
+            console.log(content);
+            document.querySelector("#details").innerHTML = content;
+            return content;
+        }
+        function priority(id) {
+            let priority = document.querySelector("#changePriority").value;
+            console.log(changePriority);
+            var ticketid;
+            var tickets = new addTicket().list();
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+            let index = tickets.findIndex(obj => obj.id == id); // This should return index
+            let ticketObj = tickets[index];
+            //update ticket status to close
+            ticketObj["priority"] = priority;
+            //update the modified object to tickets array
+            tickets[index] = ticketObj;
+            //update in localStorage
+            localStorage.setItem("TICKET", JSON.stringify(tickets));
+            location.reload();
+        }
             function close1(id) {
                 var ticketid;
                 var tickets = new addTicket().list();
