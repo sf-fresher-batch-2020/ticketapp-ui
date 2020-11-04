@@ -1,0 +1,18 @@
+th{
+    background-color:rgb(27, 27, 136);
+    color:white;
+    
+    
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+tr:hover{
+    background-color: grey;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+  }
