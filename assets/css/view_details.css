@@ -16,9 +16,10 @@
     select {
         padding:0;
         width: 50%;
-        margin-top: -20px;
+        margin-top: -5px;
         font-size: 15px;
-        max-height: 50px;
+        max-height: 30px;
+        line-height: 1%;
       }
     #details{
         line-height: 80%;
@@ -28,7 +29,7 @@
     border-spacing: 15px 50px;  
     border-color: cornsilk;
     text-align:left;
-    line-height:90%;
+    line-height:72%;
     }
     .btn{
         margin:0;
