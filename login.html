@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="google-signin-client_id"
+    content="395011868326-ram09v6lhfla0hg41665erk78h70vt8o.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - HelpDesk </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -45,16 +46,64 @@
                         <option value="Admin" id="Admin">Technical Department</option>
                     </select>
                     <div class="row justify-content-center">
-                        <input class="btns" type="submit" value="login">
-
+                        <input class="btns" type="submit" value="login"><p class="mt-2">&nbsp; or &nbsp;</p> 
+                       <div class="pt-1">
+                        <div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <div id="loggedin">
+                            <div id="userdetail"></div>
+                            <a id="signout" href="#" onclick="signOut();">Sign out</a>
+                        </div>
                     </div>
+                    </div>
+                   
                     <br />
                     <div class="row justify-content-center">
                         <div id="message">
                         </div>
                     </div>
-
                 </form>
+                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                <script>
+                    function onSignIn(googleUser) {
+                        var profile = googleUser.getBasicProfile();
+                        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                        console.log('Name: ' + profile.getName());
+                        console.log('Image URL: ' + profile.getImageUrl());
+                        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                        let user = { id: profile.getId(), name: profile.getName(), photoUrl: profile.getImageUrl(), email: profile.getEmail() };
+                        localStorage.setItem("LOGGED_IN_USER", JSON.stringify(user));
+                        console.log(user);
+                        checkLoggedIn();
+                    }
+                    function signOut() {
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            console.log('User signed out.');
+                            localStorage.removeItem("LOGGED_IN_USER");
+                            checkLoggedIn();
+                        });
+                    }
+                    function checkLoggedIn() {
+                        var user = localStorage.getItem("LOGGED_IN_USER");
+                        var loggedInUser = user != null ? JSON.parse(user) : null;
+                        if (loggedInUser == null) {
+                            //If user not loggedin, Show login button and hide logout button
+                            document.querySelector("#signin").style.display = "block";
+                            document.querySelector("#signout").style.display = "none";
+                            document.querySelector("#userdetail").innerHTML = "";
+                        }
+                        else {
+                            //If user loggedIn, Hide login button and show logout button
+                            document.querySelector("#signin").style.display = "none";
+                            document.querySelector("#signout").style.display = "block";
+                            //Show user details
+                            let content = `Welcome ${loggedInUser.name}( ${loggedInUser.id})`;
+                            content += `<img src="${loggedInUser.photoUrl}" width="30" />`;
+                            document.querySelector("#userdetail").innerHTML = content;
+                        }
+                    }
+                    checkLoggedIn();
+                </script>
             </div>
         </div>
     </main>
@@ -193,7 +242,6 @@ function login() {
             }
            
             }
-           
     </script>
 
 </body>
