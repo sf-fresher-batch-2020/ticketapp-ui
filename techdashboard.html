@@ -22,41 +22,7 @@
 
     <link rel="stylesheet" href="assets/css/list_ticket.css">
     <style>
-        select {
-            -webkit-appearance: button;
-            -moz-appearance: button;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -webkit-padding-end: 20px;
-            -moz-padding-end: 20px;
-            -webkit-padding-start: 2px;
-            -moz-padding-start: 2px;
-            background-color: #F07575;
-            /* Fallback color if gradients are not supported */
-            background-image: -webkit-linear-gradient(top, #E5E5E5, #F4F4F4);
-            /* For Chrome and Safari */
-            background-image: -moz-linear-gradient(top, #E5E5E5, #F4F4F4);
-            /* For old Firefox (3.6 to 15) */
-            background-image: -ms-linear-gradient(top, #E5E5E5, #F4F4F4);
-            /* For pre-releases of Internet Explorer  10*/
-            background-image: -o-linear-gradient(top, #E5E5E5, #F4F4F4);
-            /* For old Opera (11.1 to 12.0) */
-            background-image: linear-gradient(to bottom, #E5E5E5, #F4F4F4);
-            /* Standard syntax; must be last */
-            background-position: center right;
-            background-repeat: no-repeat;
-            border: 1px solid #AAA;
-            border-radius: 2px;
-            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-            color: #555;
-            font-size: inherit;
-            margin: 0;
-            overflow: hidden;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+
     </style>
 </head>
 
@@ -70,7 +36,50 @@
                 <div id="username">
 
                 </div>
-
+            </div>
+            <hr><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <label>Search By Priority</label>
+                        <select id="priority" onchange="filterByPriority(this.value)">
+                            <option value="ALL">--ALL--</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label>Search By Status</label>
+                        <select id="priority" onchange="filterByStatus(this.value)">
+                            <option value="ALL">--ALL--</option>
+                            <option value="Open">Open</option>
+                            <option value="Close">Close</option>
+                            <option value="In-progress">In-progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label>Search By Assigned To</label>
+                        <select id="priority" onchange="filterByAssigned(this.value)">
+                            <option value="ALL">--ALL--</option>
+                            <option value="Development Team">Development Team</option>
+                            <option value="Hardware Team">Hardware Team</option>
+                            <option value="Software Team">Software Team</option>
+                            <option value="Sales Team">Sales Team</option>
+                            <option value="Csml Team">Csml Team</option>
+                            <option value="Networking Team">Networking Team</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label>Search By Unassigned Ticket</label>
+                        <select id="priority" onchange="filterByUnassigned(this.value)">
+                            <option value="ALL">--ALL--</option>
+                            <option value="Team">Unassigned Ticket</option>
+                           
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div id="message">
@@ -87,7 +96,6 @@
                             <th> Title </th>
                             <th>Priority</th>
                             <th>Status</th>
-                            
                             <th>View Details</th>
                         </tr>
                     </thead>
@@ -99,7 +107,7 @@
         </div>
     </main>
     <hr>
-    <div id="page-content">
+    <!-- <div id="page-content">
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -160,7 +168,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <section id="media" style="margin-top: 20px;">
         <br><br>
         <div class="container">
@@ -275,34 +283,7 @@
             var tickets = new addTicket().list();
 
             console.log(tickets);
-
-            let sno = 0;
-            if (tickets.length > 0) {
-                for (var obj of tickets) {
-                    let assignto = `<button  class="btn btn-info" onclick="assign(${obj.assignTo})">Assign&nbsp;To</button>`;
-                    let closeBtn = `<button id='close' class="btn btn-secondary"  onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    //let viewBtn = `<button  class='btn btn-success' data-toggle='modal' data-target='.bd-example-modal-lg' onclick='viewdetails(" + obj.tel + ")'>View&nbsp;details</button>`;
-                    let viewBtn=`<a href="view_details.html?ticketId=${obj.id}"><button class="btn btn-success">View</button></a>`;
-                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.email + "</td><td>" + obj.title + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + viewBtn + 
-                        "</td></tr>";
-                    $("table tbody").append(new_row);
-                }
-                document.querySelector("#card-table").style.display = "block";
-            }
-            else {
-                document.querySelector("#card-table").style.display = "none";
-                document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>No Ticket Available.</div>";
-            }
-        }
-        function deleteRecord(num) {
-            console.log("Going to delete");
-            console.log(num);
-            let tickets = new addTicket().list();
-            let index = tickets.findIndex(obj => obj.tel == num);
-            tickets.splice(index, 1);
-            console.log(index);
-            localStorage.setItem("TICKET", JSON.stringify(tickets));
-            location.reload();
+            displayTickets(tickets);
         }
         function viewdetails(views) {
 
@@ -322,7 +303,107 @@
             document.getElementById('details').innerHTML = newticket;
         }
 
-        function close1(id) {
+
+        function displayTickets(tickets) {
+            $("table tbody").empty();
+            let sno = 0;
+            if (tickets.length > 0) {
+                for (var obj of tickets) {
+                    let viewBtn = `<a href="view_details.html?ticketId=${obj.id}"><button class="btn btn-success">View</button></a>`;
+                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
+                    let deleterecord = `<button class="btn btn-danger" onclick="deleteRecord(${obj.tel})">Delete</button>`;
+                    var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.id + "</td><td>" + obj.title + "</td><td>" + obj.email + "</td><td>" + obj.priority + "</td><td>" + obj.ticketstatus + "</td><td>" + viewBtn + "</td></tr>";
+                    $("table tbody").append(new_row);
+                }
+                document.querySelector("#card-table").style.display = "block";
+                document.querySelector("#message").style.display = "none";
+            }
+            else {
+                document.querySelector("#card-table").style.display = "none";
+                document.querySelector("#message").style.display = "block";
+                document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>No Ticket Available.</div>";
+            }
+        }
+        function filterByPriority(priority) {
+
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+
+            let filteredData = null;
+            if (priority == 'ALL') {
+                filteredData = tickets;
+            }
+            else {
+                filteredData = tickets.filter(obj => obj.priority == priority);
+            }
+            console.log(filteredData);
+            //document.querySelector("#result").innerHTML = JSON.stringify(filteredData);
+            displayTickets(filteredData);
+        }
+        filterByPriority('ALL');
+
+        function filterByStatus(ticketstatus) {
+
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+
+            let filteredData = null;
+            if (ticketstatus == 'ALL') {
+                filteredData = tickets;
+            }
+            else {
+                filteredData = tickets.filter(obj => obj.ticketstatus == ticketstatus);
+            }
+            console.log(filteredData);
+            //document.querySelector("#result").innerHTML = JSON.stringify(filteredData);
+            displayTickets(filteredData);
+        }
+        filterByStatus('ALL');
+
+        function filterByAssigned(Team) {
+
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+
+            let filteredData = null;
+            if (Team == 'ALL') {
+                filteredData = tickets;
+            }
+            else {
+                filteredData = tickets.filter(obj => obj.Team == Team);
+            }
+            console.log(filteredData);
+            //document.querySelector("#result").innerHTML = JSON.stringify(filteredData);
+            displayTickets(filteredData);
+        }
+        filterByStatus('ALL');
+
+        function filterByUnassigned(Team) {
+
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+
+            let filteredData = null;
+            if (Team == 'ALL') {
+                filteredData = tickets;
+            }
+            else {
+                filteredData = tickets.filter(obj => obj.Team == "");
+            }
+            console.log(filteredData);
+            //document.querySelector("#result").innerHTML = JSON.stringify(filteredData);
+            displayTickets(filteredData);
+        }
+        filterByUnassigned('ALL');
+        displaytickets();
+       /* function deleteRecord(num) {
+              console.log("Going to delete");
+              console.log(num);
+              let tickets = new addTicket().list();
+              let index = tickets.findIndex(obj => obj.tel == num);
+              tickets.splice(index, 1);
+              console.log(index);
+              localStorage.setItem("TICKET", JSON.stringify(tickets));
+              location.reload();
+          }*/
+
+        /* function close1(id) {
             var ticketid;
             var tickets = new addTicket().list();
             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
@@ -338,50 +419,46 @@
             localStorage.setItem("TICKET", JSON.stringify(tickets));
             location.reload();
 
-        }
-        function assign(team) {
-            //var assignTo = document.getElementById('assignTo').value;
-            if (document.getElementById('techteam').checked) {
-                assignTo = document.getElementById('techteam').value;
-            }
-            else if (document.getElementById('networkingTeam').checked) {
-                assignTo = document.getElementById('networkingTeam').value;
-            }
-            else if (document.getElementById('softwareTeam').checked) {
-                assignTo = document.getElementById('softwareTeam').value;
-            }
-            else if (document.getElementById('operatingTeam').checked) {
-                assignTo = document.getElementById('operatingTeam').value;
-            }
-            let users = JSON.parse(localStorage.getItem("USERS")) || [];
-            console.log(assignTo);
-            let members = users.filter(obj => obj.team == assignTo);
-            console.log(members);
-            let content = "";
-            for (let m of members) {
-                content += `${m.name}`;
-            }
-            console.log(content);
-            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
-            let index = tickets.findIndex(obj => obj.team == team);
-            let ticketObj = tickets[index];
-            ticketObj["Team"] = content;
-            tickets[index] = ticketObj;
-            console.log(ticketObj);
-            localStorage.setItem("TICKET", JSON.stringify(tickets));
-            location.reload();
+        }*/
+        /* function assign(team) {
+             //var assignTo = document.getElementById('assignTo').value;
+             if (document.getElementById('techteam').checked) {
+                 assignTo = document.getElementById('techteam').value;
+             }
+             else if (document.getElementById('networkingTeam').checked) {
+                 assignTo = document.getElementById('networkingTeam').value;
+             }
+             else if (document.getElementById('softwareTeam').checked) {
+                 assignTo = document.getElementById('softwareTeam').value;
+             }
+             else if (document.getElementById('operatingTeam').checked) {
+                 assignTo = document.getElementById('operatingTeam').value;
+             }
+             let users = JSON.parse(localStorage.getItem("USERS")) || [];
+             console.log(assignTo);
+             let members = users.filter(obj => obj.team == assignTo);
+             console.log(members);
+             let content = "";
+             for (let m of members) {
+                 content += `${m.name}`;
+             }
+             console.log(content);
+             var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+             let index = tickets.findIndex(obj => obj.team == team);
+             let ticketObj = tickets[index];
+             ticketObj["Team"] = content;
+             tickets[index] = ticketObj;
+             console.log(ticketObj);
+             localStorage.setItem("TICKET", JSON.stringify(tickets));
+             location.reload();
 
-            /*var userObj = { "assignTo": assignTo };
-            console.log(assignTo);
-            var addTicketObj = new assigned();
-            let result = addTicketObj.assign(userObj);*/
-        }
-
-       
-        displaytickets();
+             var userObj = { "assignTo": assignTo };
+             console.log(assignTo);
+             var addTicketObj = new assigned();
+             let result = addTicketObj.assign(userObj); */
     </script>
-     
-   
+
+
 </body>
 
 </html>
