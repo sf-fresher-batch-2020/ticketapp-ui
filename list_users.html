@@ -169,15 +169,18 @@
         $("#header").load("components/_headertech.html");
     </script>
     <script>
-
-        let content = "";
-        var user = JSON.parse(localStorage.getItem("USERS")) || [];
+        function listUser(u){
+            let content = "";
+        var logintype = JSON.parse(localStorage.getItem("USERS")) || [];
+        filteredData = logintype.filter(obj => obj.logintype == "u");
         console.log(obj);
         let sno=0;
-        for (var obj of user) {
+        for (var obj of filteredData) {
             var new_row = "<tr><td>" + ++sno + "</td><td>" + obj.Id + "</td><td>" + obj.email + "</td><td>" + obj.name + "</td><td>" + obj.dob + "</td><td>";
                     $("table tbody").append(new_row);
            }
+        }
+        listUser();
 
         //document.querySelector("#details").innerHTML = new_row;
 
