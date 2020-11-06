@@ -44,7 +44,7 @@
        
     </div>
 </nav>
- <script src="https://apis.google.com/js/platform.js"></script>
+ <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 <script>
     var user = JSON.parse(localStorage.getItem("LOGGED_IN_USER"));
     console.log("LOGGED_IN_USER", user);
@@ -114,6 +114,12 @@
                             document.querySelector("#userdetail").innerHTML = content;
                         }
                     }
+                  function onLoad() {
+                  gapi.load('auth2', function() {
+                    gapi.auth2.init();
+                  });
+                }
+  
                     checkLoggedIn();
                
    
