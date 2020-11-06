@@ -68,6 +68,7 @@
    function logout(){
        // localStorage.clear();
         localStorage.removeItem("LOGGED_IN_USER");
+        signOut();
         window.location.href = "login.html";
     }
    
