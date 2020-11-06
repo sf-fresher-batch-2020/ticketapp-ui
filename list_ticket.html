@@ -153,7 +153,7 @@
             var tickets = new addTicket().list();
             this.loggedInUser = JSON.parse(localStorage.LOGGED_IN_USER);
             var data = JSON.parse(localStorage.getItem("TICKET")) || [];
-            var tickets = data.filter(obj => obj.createdBy == loggedInUser.Id);
+            var tickets = data.filter(obj => obj.createdBy == loggedInUser.id);
             console.log(tickets);
             displayTickets(tickets);
 
