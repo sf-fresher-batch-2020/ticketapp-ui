@@ -72,6 +72,7 @@
                         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
                         let user = { id: profile.getId(), name: profile.getName(), photoUrl: profile.getImageUrl(), email: profile.getEmail() };
                         localStorage.setItem("LOGGED_IN_USER", JSON.stringify(user));
+                        window.location.href="ticket.html";
                         console.log(user);
                         checkLoggedIn();
                     }
@@ -80,6 +81,7 @@
                         auth2.signOut().then(function () {
                             console.log('User signed out.');
                             localStorage.removeItem("LOGGED_IN_USER");
+                            window.location.href="login.html";
                             checkLoggedIn();
                         });
                     }
