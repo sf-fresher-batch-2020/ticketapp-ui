@@ -20,12 +20,15 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i"
         rel="stylesheet">
     <script src="modules/index.js"></script>
-    <script src="modules/loginservices.js"></script>
+    <script src="modules/userservices.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 </head>
 
 <body>
+    <header id="header">
+        <!-- Load Header content-->
+    </header>
     <header id="header">
         <!-- Load Header content-->
     </header>
@@ -40,16 +43,17 @@
                     <input type="email" name="mail" id="mail" required autofocus></br>
                     <labe>Password</labe>
                     <input type="password" name="pass" id="pass" required> </br>
-                    <select name="" id="logintype">
+                    <select name="" id="role">
                         <option value="">Select One</option>
-                        <option value="u" id="u">User</option>
-                        <option value="Admin" id="Admin">Technical Department</option>
+                        <option value="USER" id="USER">User</option>
+                        <option value="ADMIN" id="ADMIN">Technical Department</option>
                     </select>
                     <div class="row justify-content-center">
-                        <input class="btns" type="submit" value="login"><p class="mt-2">&nbsp; or &nbsp;</p> 
-                       <div class="pt-1">
-                        <div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div>
-                        <div id="loggedin">
+                        <input class="btns" type="submit" value="login">
+                        <p class="mt-2">&nbsp; or &nbsp;</p>
+                        <div class="pt-1">
+                            <div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div>
+                            <div id="loggedin">
                             <div id="userdetail"></div>
                         <!--    <a id="signout" href="#" onclick="signOut();">Sign out</a>-->
                         </div>
@@ -84,82 +88,7 @@
             </div>
         </div>
     </section>
-    <footer class="footer" style="margin-top: 30px;">
-        <div class="container-fluid ">
-            <div class="row">
-
-                <div class="col-md-12 col-lg-4">
-                    <div class="footer-logo">
-
-                        <a class="navbar-brand" href="#">HelpDesk</a>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the.</p>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="list-menu">
-
-                        <h4>1</h4>
-
-                        <ul class="list-unstyled">
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="list-menu">
-
-                        <h4>2</h4>
-
-                        <ul class="list-unstyled">
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="list-menu">
-
-                        <h4>3</h4>
-
-                        <ul class="list-unstyled">
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-3 col-lg-2">
-                    <div class="list-menu">
-
-                        <h4>4</h4>
-
-                        <ul class="list-unstyled">
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                            <li><a href="#">#</a></li>
-                        </ul>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
+    <footer class="footer bg-light" >
         <div class="copyrights">
             <div class="container-fluid bg-light">
                 <p>&copy; Copyrights HelpDesk. All rights reserved.</p>
@@ -173,34 +102,33 @@
     </script>
     <script>
 
-function login() {
+        function login() {
             event.preventDefault();
             // Step 1: Get Form Values
             let email = document.querySelector("#mail").value;
             let password = document.querySelector("#pass").value;
-            let logintype = document.getElementById("logintype").value;
-            var u= document.getElementById('u').value;
-            var Admin= document.getElementById('Admin').value;
+            let role = document.getElementById("role").value;
+            var user = document.getElementById('USER').value;
+            var admin = document.getElementById('ADMIN').value;
             //Step 2: Store all form values in a single object, so that it will easy to send 
-            let obj = { "email": email, "password": password, "logintype": logintype};
+            let obj = { "email": email, "password": password, "role": role };
             console.log(obj);
-            var loginserviceobj = new LoginService();
-            
-            var user = loginserviceobj.login(email, password, logintype);
+            var loginserviceobj = new UserService();
+
+            var user = loginserviceobj.login(email, password, role);
             console.log(user);
             if (user) {
-                if ( user.logintype=='u') {
-                    window.location.href="ticket.html";
+                if (user.role == 'USER') {
+                    window.location.href = "ticket.html";
                 }
-                else if (user.logintype=="Admin"){ 
-                    window.location.href="techdashboard.html";
+                else if (user.role == "ADMIN") {
+                    window.location.href = "techdashboard.html";
                 }
             }
             else {
                 document.querySelector("#message").innerHTML = "<div class='alert alert-danger'>Invalid Email or Password</div>";
             }
-           
-            }
+        }
     </script>
 
 </body>
