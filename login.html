@@ -97,7 +97,8 @@
                             document.querySelector("#signin").style.display = "none";
                             document.querySelector("#signout").style.display = "block";
                             //Show user details
-                            let content = `Welcome ${loggedInUser.name}( ${loggedInUser.id})`;
+                            //let content = `Welcome ${loggedInUser.name}( ${loggedInUser.id})`;
+                            let content = `Welcome ${loggedInUser.name}`;
                             content += `<img src="${loggedInUser.photoUrl}" width="30" />`;
                             document.querySelector("#userdetail").innerHTML = content;
                         }
