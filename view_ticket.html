@@ -150,27 +150,51 @@
                 let newticket = "";
                 let content = "";
                 if (obj) {
-                    let changePriorityBtn = `<button id='close' class="btn btn-secondary" onclick="priority(${obj.id})">Update&nbsp;Ticket Priority</button>`;
-                    let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
-                    let deleterecord = `<button class="btn btn-danger" onclick="deleteRecord(${obj.tel})">Delete&nbsp; Ticket</button>`;
-                    let changepriority= changePriority();
-                    content += `<tr ><td>${obj.id}</td></tr><td>${obj.title}</td></tr>
+                let changeProblemBtn =`<button id='close' class="btn btn-secondary" onclick="problem(${obj.id})">Update&nbsp;Problem</button>`;
+                let changePriorityBtn = `<button id='close' class="btn btn-secondary" onclick="priority(${obj.id})">Update&nbsp;Ticket Priority</button>`;
+                let closeBtn = `<button id='close' class="btn btn-secondary" onclick="close1(${obj.id})">Close&nbsp;Ticket</button>`;
+                let deleterecord = `<button class="btn btn-danger" onclick="deleteRecord(${obj.tel})">Delete&nbsp; Ticket</button>`;
+                let changepriority = changePriority();
+                let updateproblem= updateProblem();
+                content += `<tr ><td>${obj.id}</td></tr><td>${obj.title}</td></tr>
                     <tr><td>${obj.cname}</td></tr>
                     <tr><td>${obj.email}</td></tr>
                     <tr><td>${obj.department}</td></tr>
                     <tr><td>${obj.priority}${changepriority}${changePriorityBtn}</td></tr>
-                    <tr><td>${obj.textarea}</td></tr><tr><td>${obj.tel}</td></tr>
+                    <tr><td>${obj.textarea}${updateproblem}${changeProblemBtn}</td></tr><tr><td>${obj.tel}</td></tr>
                     <tr><td>${obj.ticketstatus}</td></tr><tr><td>${obj.date}</td></tr>
                     <tr><td>${obj.Team}</tr></td>
                     <tr><td>${closeBtn}&nbsp;&nbsp;${deleterecord}</td></tr>`;
-                    /*newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.Team + '<br>' + obj.priority
-                        + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date + '<br>' + closeBtn + '<br>' + assignTo;
+                /*newticket = obj.id + '<br>' + obj.title + '<br>' + obj.cname + '<br>' + obj.email + '<br>' + obj.department + '<br>' + obj.Team + '<br>' + obj.priority
+                    + '<br>' + obj.textarea + '<br>' + obj.tel + '<br>' + obj.ticketstatus + '<br>' + obj.date + '<br>' + closeBtn + '<br>' + assignTo;
 */
-                } console.log(newticket);
-                document.querySelector("#details").innerHTML = content;
-            }
-
-            
+            } console.log(newticket);
+            document.querySelector("#details").innerHTML = content;
+        }
+       function updateProblem()
+        {
+            let content = `<input type="text" value="" id="updateproblem" >`;
+            // content += `</textarea>`;
+             document.querySelector("#details").innerHTML = content;
+            return content;
+           
+        }
+        function problem(id) {
+            let problem = document.querySelector("#updateproblem").value;
+            console.log(problem);
+            var ticketid;
+            var tickets = new addTicket().list();
+            var tickets = JSON.parse(localStorage.getItem("TICKET")) || [];
+            let index = tickets.findIndex(obj => obj.id == id); // This should return index
+            let ticketObj = tickets[index];
+            //update ticket status to close
+            ticketObj["textarea"] = problem;
+            //update the modified object to tickets array
+            tickets[index] = ticketObj;
+            //update in localStorage
+            localStorage.setItem("TICKET", JSON.stringify(tickets));
+            location.reload();
+        }
             function changePriority() {
             let content = `<select id="changePriority">`;
             let priority = [
