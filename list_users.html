@@ -49,7 +49,7 @@
                             <th> User Id</th>
                             <th> Email </th>
                             <th> Name </th>
-                            <th>Registred Date</th>
+                            <th>Registered Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +92,7 @@
         $("#header").load("components/_headertech.html");
     </script>
     <script>
-        function listUser(u){
+        function listUser(USER){
            let content = "";
         var role = JSON.parse(localStorage.getItem("USERS")) || [];
         filteredData = role.filter(obj => obj.role == "USER");
