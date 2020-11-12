@@ -83,3 +83,7 @@ select *from users where role='USER';
 ```sql
 select *from ticket where team_assign='Hardware Team';
 ```
+### For Admin to Group the ticket by assigned team
+```sql
+select team_assign,count(*) from ticket group by team_assign;
+```
