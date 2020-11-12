@@ -87,3 +87,7 @@ select *from ticket where team_assign='Hardware Team';
 ```sql
 select team_assign,count(*) from ticket group by team_assign;
 ```
+### To delete the single ticket
+```sql
+delete from ticket where id=2;
+```
