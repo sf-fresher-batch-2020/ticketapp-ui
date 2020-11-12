@@ -1,3 +1,3 @@
 ### Create database
----sql
+--sql
 create database tushant_db;
